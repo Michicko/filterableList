@@ -1,20 +1,28 @@
-const searchInput = document.querySelector('.search-input');
-let ul = document.querySelector('.collection-list')
-let lis = ul.querySelectorAll('li.collection-item');
+const searchInput = document.querySelector(".search-input");
+const ul = document.querySelector(".collection-list");
+const items = ul.querySelectorAll("li");
 
-searchInput.addEventListener('keyup', function(e){
-    let input = e.target.value.toUpperCase();
-    for(let i = 0; i < lis.length; i++) {
-        let a = lis[i].firstChild.textContent.toUpperCase();
-        if(a.indexOf(input) > -1) {
-            lis[i].style.display = '';
-        } else {
-            lis[i].style.display = 'none';
+const filterList = (e) => {
+	const input = e.target.value.toUpperCase();
+
+	for (let i = 0; i < items.length; i++) {
+		let item = items[i];
+
+        // check if word exist from the start
+		if (
+			item.outerText.toUpperCase().indexOf(input) > -1 &&
+			item.outerText[0].toUpperCase() == input[0]
+		) {
+			item.style.display = "";
+		} else {
+			item.style.display = "none";
+		}
+
+        // if input is empty return to default
+        if (input === '') {
+            item.style.display = "block";
         }
-    }
-});
+	}
+};
 
-
-
-
-
+searchInput.addEventListener("keyup", filterList);
